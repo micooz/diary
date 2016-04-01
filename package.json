@@ -9,7 +9,8 @@
     "prebuild": "npm run clean",
     "build": "npm run build:prod",
     "build:prod": "NODE_ENV=production webpack --config webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
-    "compile": "NODE_ENV=production node bin/boot.js"
+    "precompile": "rimraf -/*",
+    "compile": "NODE_ENV=production node bin/bootstrap.js"
   },
   "repository": {
     "type": "git",
