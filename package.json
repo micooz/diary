@@ -1,6 +1,6 @@
 {
   "name": "diary",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Everyday, everything in my life.",
   "main": "index.js",
   "scripts": {
