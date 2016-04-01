@@ -12,8 +12,8 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    app: './src/app.js',
-    vendor: './src/vendor.js'
+    app: './src/client/app.js',
+    vendor: './src/client/vendor.js'
   },
 
   resolve: {
