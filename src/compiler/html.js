@@ -7,7 +7,7 @@ export class Html extends Component {
   };
 
   render() {
-    const {content} = this.props;
+    const {title, content} = this.props;
 
     return (
       <html lang="">
@@ -15,7 +15,7 @@ export class Html extends Component {
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>My Diary</title>
+        <title>{title}</title>
       </head>
       <body>
       <div dangerouslySetInnerHTML={{__html: content}}></div>

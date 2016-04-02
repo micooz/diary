@@ -4,11 +4,11 @@ import {Html} from './html';
 
 /**
  * Asynchronously put content to Html component
- * @param content
+ * @param props
  * @returns {Promise}
  */
-export function assemble(content) {
+export function assemble(props) {
   return new Promise((resolve, reject) => {
-    resolve(ReactDOM.renderToStaticMarkup(<Html content={content}/>));
+    resolve(ReactDOM.renderToStaticMarkup(<Html {...props}/>));
   });
 }
