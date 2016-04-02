@@ -8,7 +8,8 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "npm run build:prod",
-    "build:prod": "NODE_ENV=production webpack --config webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
+    "build:dev":"webpack --config webpack.config.js --progress --profile --colors --display-error-details --display-cached --watch",
+    "build:prod": "webpack --config webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
     "precompile": "rimraf -/*",
     "compile": "NODE_ENV=production node bin/bootstrap.js"
   },
