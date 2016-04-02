@@ -1,7 +1,7 @@
 {
   "name": "diary",
   "version": "0.0.2",
-  "description": "Everyday, everything in my life.",
+  "description": "Track of everything in your life",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
