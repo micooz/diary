@@ -1,7 +1,7 @@
 import path from 'path';
 
 const root = function root() {
-  return path.resolve.apply(path, arguments);
+  return path.resolve.apply(path, [__dirname, ...arguments]);
 };
 
 /**
