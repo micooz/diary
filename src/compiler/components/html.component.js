@@ -20,6 +20,15 @@ export class Html extends Component {
       </head>
       <body>
       {body}
+
+      {__DEVELOPMENT__ ?
+        <script src="/vendor.js"></script> :
+        <script src="/diary/dist/vendor.min.js"></script>
+      }
+      {__DEVELOPMENT__ ?
+        <script src="/app.js"></script> :
+        <script src="/diary/dist/app.min.js"></script>
+      }
       </body>
       </html>
     );
