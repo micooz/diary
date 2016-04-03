@@ -3,5 +3,5 @@ dist/
 .idea/
 -/
 
-npm-debug.log
+npm-debug.log*
 index.html
