@@ -18,7 +18,7 @@ const main = () => {
       //   pathname: '/diary/-/',
       //   search: time.format('YYYY/MM/YYYY-MM-DD') + '.html'
       // });
-      window.location = '/diary/-/' + time.format('YYYY/MM/YYYY-MM-DD') + '.html';
+      window.location += '-/' + time.format('YYYY/MM/YYYY-MM-DD') + '.html';
     },
     i18n: {
       previousMonth: '&lt;&lt;',
