@@ -24,8 +24,6 @@ export class HomeComponent extends Component {
           <address className="author">
             Calendar designed by
             <a rel="author" href="https://github.com/joyeecheung" className="author-name">Joyee Cheung</a>
-            -
-            <a href="https://github.com/joyeecheung/my-tech-diary" className="source-repo">Source</a>
           </address>
           <br/>
           <p>
