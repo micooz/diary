@@ -31,6 +31,16 @@ module.exports = webpackMerge(webpackCommon, {
         NODE_ENV: '"development"'
       }
     })
-  ]
+  ],
+
+  devServer: {
+    port: 3000,
+    host: 'localhost',
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  }
 
 });
