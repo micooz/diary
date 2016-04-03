@@ -15,7 +15,7 @@ module.exports = webpackMerge(webpackCommon, {
 
     path: path.resolve(__dirname, '../dist'),
 
-    filename: '[name]-bundle.js',
+    filename: '[name].js',
 
     sourceMapFilename: '[name].map',
 

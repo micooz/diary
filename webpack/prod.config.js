@@ -19,9 +19,9 @@ module.exports = webpackMerge(webpackCommon, {
 
     path: path.resolve(__dirname, '../dist'),
 
-    filename: '[name]-[chunkhash].js',
+    filename: '[name].min.js',
 
-    sourceMapFilename: '[name]-[chunkhash].map',
+    sourceMapFilename: '[name].map',
 
     chunkFilename: '[id]-[chunkhash].js'
 

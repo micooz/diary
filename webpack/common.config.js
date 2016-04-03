@@ -8,8 +8,6 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
 
   entry: {
@@ -52,12 +50,6 @@ module.exports = {
     new CommonsChunkPlugin({
       name: ['app', 'vendor'],
       minChunks: Infinity
-    }),
-    new HtmlWebpackPlugin({
-      filename: '../index.html',
-      template: 'src/client/index.html',
-      chunksSortMode: 'none',
-      inject: true
     })
   ],
 
