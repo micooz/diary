@@ -11,8 +11,10 @@ export class DiaryComponent extends Component {
 
     return (
       <div>
-        <div>YEAR MONTH DAY</div>
-        <div dangerouslySetInnerHTML={{__html: content}}></div>
+        <header className="header">
+          <h1>Diary</h1>
+        </header>
+        <div className="diary" dangerouslySetInnerHTML={{__html: content}}></div>
       </div>
     );
   }
