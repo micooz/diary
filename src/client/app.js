@@ -3,11 +3,17 @@ import moment from 'moment';
 // import {createHistory} from 'history';
 import './css/global.css';
 import './css/calendar.css';
+import './css/diary.css'
 
 // const history = createHistory();
 
 const main = () => {
   const calendar = document.getElementById('calendar');
+
+  if (!calendar) {
+    return;
+  }
+
   const lastDate = new Date(calendar.getAttribute('data-last-date'));
   const firstDate = new Date(calendar.getAttribute('data-first-date'));
 
