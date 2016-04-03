@@ -11,7 +11,7 @@ export class Compiler {
 
   config = undefined;
 
-  homePage = path.resolve(__dirname, '../client/index.html');
+  homePage = path.resolve(__dirname, '../../index.html');
 
   constructor(config) {
     this.config = config;
