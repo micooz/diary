@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 
 // webpack plugins
 const DefinePlugin = require('webpack/lib/DefinePlugin');
@@ -10,13 +9,8 @@ const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin'
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
 
 module.exports = {
-
-  debug: false,
-
-  devtool: 'source-map',
 
   entry: {
     'app': './src/client/app.js',
@@ -25,23 +19,11 @@ module.exports = {
 
   resolve: {
 
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.css'],
 
     root: path.resolve(__dirname, 'src/client'),
 
     modulesDirectories: ['node_modules']
-
-  },
-
-  output: {
-
-    path: path.resolve(__dirname, 'dist'),
-
-    filename: '[name]-[chunkhash].js',
-
-    sourceMapFilename: '[name]-[chunkhash].map',
-
-    chunkFilename: '[id]-[chunkhash].js'
 
   },
 
@@ -53,6 +35,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        loader: 'style-loader!css-loader!postcss-loader'
       }
 
     ]
@@ -60,28 +48,10 @@ module.exports = {
   },
 
   plugins: [
-    new WebpackMd5Hash(),
-    new DedupePlugin(),
     new OccurenceOrderPlugin(true),
     new CommonsChunkPlugin({
       name: ['app', 'vendor'],
       minChunks: Infinity
-    }),
-    new UglifyJsPlugin({
-      beautify: false,
-      mangle: {
-        screw_ie8: true,
-        keep_fnames: true
-      },
-      compress: {
-        screw_ie8: true,
-        warnings: false
-      },
-      comments: false
-    }),
-    new DefinePlugin({
-      'ENV': JSON.stringify('production'),
-      'NODE_ENV': JSON.stringify('production')
     }),
     new HtmlWebpackPlugin({
       filename: '../index.html',
@@ -100,12 +70,12 @@ module.exports = {
     setImmediate: false
   },
 
-  htmlLoader: {
-    minimize: true,
-    removeAttributeQuotes: false,
-    caseSensitive: true
-  },
-
-  postcss: [autoprefixer]
+  postcss: [
+    require('postcss-cssnext')(),
+    require('autoprefixer')({
+      browsers: ['last 2 versions']
+    })
+    // just use css-loader option that already use cssnano under the hood
+  ]
 
 };
