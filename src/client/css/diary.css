@@ -24,7 +24,6 @@
   line-height: 3rem;
   color: var(--textColor);
   background-color: white;
-  transition: all 0.2s ease-out;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
 }
 
