@@ -1,10 +1,6 @@
 import {Compiler} from './compiler';
 import config from '../../config';
 
-const app = new Compiler();
+const app = new Compiler(config);
 
-app.run(config, (err, file) => {
-  if (!err) {
-    console.log(`==> [compiler] compiled ${file}`);
-  }
-});
+app.run();

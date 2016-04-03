@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import {Html} from './html';
+import {Html} from './components/html.component';
 
 /**
  * Asynchronously put content to Html component
