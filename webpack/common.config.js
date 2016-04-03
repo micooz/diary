@@ -71,8 +71,8 @@ module.exports = {
   },
 
   postcss: [
-    require('postcss-cssnext')(),
-    require('autoprefixer')({
+    require('postcss-import')({ addDependencyTo: webpack }),
+    require('postcss-cssnext')({
       browsers: ['last 2 versions']
     })
     // just use css-loader option that already use cssnano under the hood
