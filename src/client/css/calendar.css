@@ -74,7 +74,7 @@ button.is-disabled:hover {
 }
 
 .pika-table td {
-  width: 2rem;
+  /*width: 2rem;*/
   height: 3rem;
   text-align: center;
 }
