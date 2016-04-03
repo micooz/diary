@@ -39,7 +39,7 @@ export class Compiler {
             content: content
           }))
           .then(page => Dump.dump(page, saveTo))
-          .then(() => callback(null))
+          .then(() => callback(null, html_filename))
           .catch(err => console.error(err));
       } else {
         console.error(`'${filename}' is not a valid file name`);
