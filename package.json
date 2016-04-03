@@ -9,11 +9,13 @@
     "build": "npm run build:dev",
     "prebuild:dev": "concurrently --kill-others \"npm run clean\" \"npm run compile\"",
     "build:dev": "webpack --config webpack/dev.config.js --progress --profile --colors --display-error-details --display-cached --watch",
-    "prebuild:prod": "concurrently --kill-others \"npm run clean\" \"npm run compile\"",
+    "prebuild:prod": "concurrently --kill-others \"npm run clean\" \"npm run compile:prod\"",
     "build:prod": "webpack --config webpack/prod.config.js --progress --profile --colors --display-error-details --display-cached --bail",
     "dev": "concurrently --kill-others \"npm run clean\" \"npm run compile\" \"npm run dev:server\"",
     "dev:server": "webpack-dev-server --config webpack/dev.config.js --content-base .",
-    "compile": "NODE_ENV=production node bin/bootstrap.js"
+    "compile": "npm run compile:dev",
+    "compile:dev": "node bin/bootstrap.js",
+    "compile:prod": "NODE_ENV=production node bin/bootstrap.js"
   },
   "repository": {
     "type": "git",
