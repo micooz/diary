@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf dist",
-    "prebuild:dev": "npm run clean",
+    "clean": "rimraf dist -/*",
     "build": "npm run build:dev",
+    "prebuild:dev": "concurrently --kill-others \"npm run clean\" \"npm run compile\"",
     "build:dev": "webpack --config webpack/dev.config.js --progress --profile --colors --display-error-details --display-cached --watch",
-    "prebuild:prod": "npm run clean",
+    "prebuild:prod": "concurrently --kill-others \"npm run clean\" \"npm run compile\"",
     "build:prod": "webpack --config webpack/prod.config.js --progress --profile --colors --display-error-details --display-cached --bail",
-    "precompile": "rimraf -/*",
+    "dev": "concurrently --kill-others \"npm run clean\" \"npm run compile\" \"npm run dev:server\"",
+    "dev:server": "webpack-dev-server --config webpack/dev.config.js --content-base .",
     "compile": "NODE_ENV=production node bin/bootstrap.js"
   },
   "repository": {
