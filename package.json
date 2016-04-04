@@ -49,6 +49,7 @@
     "postcss-import": "^8.0.2",
     "postcss-loader": "^0.8.2",
     "rimraf": "^2.5.2",
+    "serialize-javascript": "^1.2.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
