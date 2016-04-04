@@ -7,14 +7,11 @@ global.__DEVELOPMENT__ = __DEVELOPMENT__;
 global.__PRODUCTION__ = !__DEVELOPMENT__;
 
 if (__DEVELOPMENT__) {
-  if (require('piping')({
+  if (!require('piping')({
       hook: true
     })) {
-    require('../src/compiler');
+    return;
   }
-} else {
-  require('../src/compiler');
 }
 
-// necessary for concurrently
-return 0;
+require('../src/compiler');
