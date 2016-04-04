@@ -11,7 +11,7 @@ export class Html extends Component {
     const {title, body} = this.props;
 
     return (
-      <html lang="">
+      <html lang="en">
       <head>
         <meta charSet="utf-8"/>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
@@ -22,11 +22,11 @@ export class Html extends Component {
       {body}
 
       {__DEVELOPMENT__ ?
-        <script src="/vendor.js"></script> :
+        <script src="/diary/dist/vendor.js"></script> :
         <script src="/diary/dist/vendor.min.js"></script>
       }
       {__DEVELOPMENT__ ?
-        <script src="/app.js"></script> :
+        <script src="/diary/dist/app.js"></script> :
         <script src="/diary/dist/app.min.js"></script>
       }
       {__PRODUCTION__ ?

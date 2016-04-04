@@ -36,6 +36,7 @@ module.exports = webpackMerge(webpackCommon, {
   devServer: {
     port: 3000,
     host: 'localhost',
+    publicPath: '/diary/dist',
     historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
