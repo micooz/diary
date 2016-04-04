@@ -7,12 +7,12 @@ export class DiaryComponent extends Component {
   };
 
   render() {
-    const {content} = this.props;
+    const {header, content} = this.props;
 
     return (
       <div>
         <header className="header">
-          <h1>Diary</h1>
+          <h1>{header}</h1>
         </header>
         <div className="diary" dangerouslySetInnerHTML={{__html: content}}></div>
       </div>

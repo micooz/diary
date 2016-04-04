@@ -75,7 +75,7 @@ export class Compiler {
       Render.render(markdown)
         .then(content => Assembler.assemble({
           title: date.toDateString(),
-          body: <DiaryComponent content={content}/>
+          body: <DiaryComponent header={date.toDateString()} content={content}/>
         }))
         .then(page => Dump.dump(page, saveTo))
         .then(() => console.log(`==> [diary] compiled ${html_filename}`))
