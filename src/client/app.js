@@ -14,17 +14,20 @@ const main = () => {
     return;
   }
 
-  const lastDate = new Date(calendar.getAttribute('data-last-date'));
-  const firstDate = new Date(calendar.getAttribute('data-first-date'));
-
   const pikaday = new Pikaday({
     onSelect: function (date) {
       const time = moment(date);
-      // history.push({
-      //   pathname: '/diary/-/',
-      //   search: time.format('YYYY/MM/YYYY-MM-DD') + '.html'
-      // });
-      window.location += '-/' + time.format('YYYY/MM/YYYY-MM-DD') + '.html';
+      if (window.__data.dates[time.format('YYYY-MM-DD')]) {
+        // history.push({
+        //   pathname: '/diary/-/',
+        //   search: time.format('YYYY/MM/YYYY-MM-DD') + '.html'
+        // });
+        window.location += '-/' + time.format('YYYY/MM/YYYY-MM-DD') + '.html';
+      }
+    },
+    disableDayFn: (date) => {
+      const time = moment(date).format('YYYY-MM-DD');
+      return window.__data.dates[time] ? false : true;
     },
     i18n: {
       previousMonth: '&lt;&lt;',
@@ -32,9 +35,9 @@ const main = () => {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    },
-    minDate: firstDate,
-    maxDate: lastDate
+    }
+    // minDate: new Date(window.__data.from),
+    // maxDate: new Date(window.__data.to)
   });
 
   calendar.appendChild(pikaday.el);

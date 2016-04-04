@@ -1,5 +1,6 @@
 import React from 'react';
 import path from 'path';
+import moment from 'moment';
 import * as Archives from './archives';
 import * as Render from './render';
 import * as Assembler from './assembler';
@@ -19,24 +20,24 @@ export class Compiler {
 
   run() {
     const archPath = this.config.archives;
-
     const markdowns = Archives.load(archPath);
 
     let dates = [];
     for (let md of markdowns) {
       const date = this.makeDiaryPage(md);
       if (date) {
-        dates.push(date.getTime());
+        dates.push(date);
       }
     }
-    dates.sort();
+    dates.sort((d1, d2) => d1.getTime() - d2.getTime());
 
     if (dates.length > 0) {
-      const options = {
+      const _data = {
         from: dates[0],
-        to: dates[dates.length - 1]
+        to: dates[dates.length - 1],
+        dates: this._index(dates, date => moment(date).format('YYYY-MM-DD'))
       };
-      this.makeHomePage(options);
+      this.makeHomePage(_data);
     }
   }
 
@@ -66,7 +67,9 @@ export class Compiler {
       // path/to/2016-01-01.html
       const saveTo = path.join(this.config.dist, ...[...year_month, html_filename]);
 
-      const date = new Date(year_month_day.join('-'));
+      // 2016-01-01
+      const date_str = year_month_day.join('-');
+      const date = new Date(date_str);
 
       // render every diary
       Render.render(markdown)
@@ -82,25 +85,56 @@ export class Compiler {
     } else {
       console.error(`'${filename}' is not a valid file name`);
     }
-    return null;
   }
 
   /**
    * generate homepage
    * @param options
    */
-  makeHomePage(options = {from: 0, to: 0}) {
+  makeHomePage(options = {from: 0, to: 0, dates: {}}) {
     if (options.from > 0 && options.to > 0) {
       const saveTo = this.homePage;
 
       Assembler.assemble({
           title: 'Diary Home',
-          body: <HomeComponent from={options.from} to={options.to}/>
+          body: <HomeComponent {...options}/>
         })
         .then(page => Dump.dump(page, saveTo))
         .then(() => console.log(`==> [homepage] generated at ${saveTo}`))
         .catch(err => console.error(err));
     }
+  }
+
+  /**
+   * generate index of an array
+   * @param arr
+   * @param fn a callback function which should return a key of every element
+   * @returns {{}} the index object
+   * @private
+   *
+   * @example
+   *
+   * const arr = [{id: 1, data: '1'}, {id: 2, data: '2'}];
+   * const index_of_arr = _index(arr, ele => ele.id);
+   *
+   * result:
+   *
+   *   {
+   *     1: {id: 1, data: '1'},
+   *     2: {id: 2, data: '2'}
+   *   }
+   *
+   */
+  _index(arr, fn) {
+    let indexes = {};
+    for (let it of arr) {
+      const key = fn(it);
+      if (!indexes[key]) {
+        indexes[key] = {};
+      }
+      indexes[key] = it;
+    }
+    return indexes;
   }
 
 }

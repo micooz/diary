@@ -1,24 +1,20 @@
 import React, {Component, PropTypes} from 'react';
 import moment from 'moment';
+import serialize from 'serialize-javascript';
 
 export class HomeComponent extends Component {
 
   static propTypes = {
-    from: PropTypes.number,
-    to: PropTypes.number
+    from: PropTypes.instanceOf(Date),
+    to: PropTypes.instanceOf(Date)
   };
-
+  
   render() {
-    const {from, to} = this.props;
-
-    const from_date = moment(from).format('YYYY-MM-DD');
-    const to_date = moment(to).format('YYYY-MM-DD');
-
     return (
       <div>
         <header className="header"><h1>Diary</h1></header>
         <div className="content">
-          <div id="calendar" data-first-date={from_date} data-last-date={to_date}></div>
+          <div id="calendar"></div>
         </div>
         <footer className="footer">
           <address className="author">
@@ -31,6 +27,8 @@ export class HomeComponent extends Component {
             <a href="https://github.com/micooz/diary" className="site-repo">Micooz&#39;s diary compiler</a>
           </p>
         </footer>
+
+        <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(this.props)};`}}></script>
       </div>
     );
   }
