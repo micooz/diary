@@ -25,21 +25,25 @@ Install everything you need:
 
 ## Development
 
+Auto-compile after any changes:
+
+    $ npm run compile:dev
+
 We can make use of `webpack-dev-server` to setup our devServer:
 
-    $ npm run dev
+    $ npm run dev:server
 
 ## Production
 
-In production, we need transform `*.md` to `*.html`, compile all scripts and bundle them into single file. To do these, just issue:
+In production, we need transform `*.md` to `*.html`, compile all scripts and bundle them into single file.
+To do these, just issue:
 
     $ npm run build:prod
 
 ## RoadMap
 
 - [x] **dev**: add a dev server
-- [ ] **compiler**: generate metadata for `archives`
-- [ ] **calendar**: only link days which have diary
+- [x] **calendar**: only link days which have diary
 - [ ] **diary**: beautify
 - [ ] **diary**: highlight code
 - [ ] **deploy**: scripts to deploy github pages
