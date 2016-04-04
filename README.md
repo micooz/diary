@@ -32,6 +32,10 @@ Auto-compile after any changes:
 We can make use of `webpack-dev-server` to setup our devServer:
 
     $ npm run dev:server
+    
+All in one command:
+
+    $ npm run dev
 
 ## Production
 
