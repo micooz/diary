@@ -48,10 +48,10 @@ To do these, just issue:
 
 - [x] **dev**: add a dev server
 - [x] **calendar**: only link days which have diary
-- [ ] **diary**: beautify
+- [x] **page**: switch among pages without refresh
+- [x] **diary**: beautify
 - [ ] **diary**: highlight code
 - [ ] **deploy**: scripts to deploy github pages
-- [ ] **page**: switch among pages without refresh
 
 ## Author
 
