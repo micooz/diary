@@ -1,14 +1,16 @@
 import React, {Component, PropTypes} from 'react';
+import serialize from 'serialize-javascript';
 
 export class Html extends Component {
 
   static propTypes = {
     title: PropTypes.string,
-    content: PropTypes.string
+    content: PropTypes.string,
+    __data: PropTypes.object
   };
 
   render() {
-    const {title, body} = this.props;
+    const {title, body, __data} = this.props;
 
     return (
       <html lang="en">
@@ -17,18 +19,22 @@ export class Html extends Component {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>{title}</title>
+        {__DEVELOPMENT__ ?
+          <script src="/diary/dist/vendor.js"></script> :
+          <script src="/diary/dist/vendor.min.js"></script>
+        }
+        {__DEVELOPMENT__ ?
+          <script src="/diary/dist/app.js"></script> :
+          <script src="/diary/dist/app.min.js"></script>
+        }
       </head>
       <body>
-      {body}
+      <div id="app">{body}</div>
 
-      {__DEVELOPMENT__ ?
-        <script src="/diary/dist/vendor.js"></script> :
-        <script src="/diary/dist/vendor.min.js"></script>
-      }
-      {__DEVELOPMENT__ ?
-        <script src="/diary/dist/app.js"></script> :
-        <script src="/diary/dist/app.min.js"></script>
-      }
+      {__data ?
+        <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(__data)};`}}></script>
+        : null}
+
       {__PRODUCTION__ ?
         <script dangerouslySetInnerHTML={{__html: `
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

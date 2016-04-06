@@ -25,17 +25,18 @@ const mkdir = (directory) => {
 };
 
 /**
- * Asynchronously dump html page to filesystem
- * @param page
+ * Asynchronously write data to filesystem
+ * @param data
  * @param destination
  */
-export function dump(page, destination) {
+export function dump(data, destination) {
   // make sure directory exist
   mkdir(path.dirname(destination));
 
-  fs.writeFile(destination, page, (err) => {
+  fs.writeFile(destination, data, (err) => {
     if (err) {
       console.error(err);
     }
   });
+  return data;
 }

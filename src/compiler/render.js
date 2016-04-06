@@ -2,19 +2,27 @@ import fs from 'fs';
 import marked from 'marked';
 
 /**
- * Asynchronously render the specified Markdown to html string
+ * read data from file
  * @param file
  * @returns {Promise}
  */
-export function render(file) {
+export function read(file) {
   return new Promise((resolve, reject) => {
     fs.readFile(file, 'utf8', (err, data) => {
       if (!err) {
-        const html = marked(data);
-        resolve(html);
+        resolve(data);
         return;
       }
       reject(err);
     });
   });
+}
+
+/**
+ * Asynchronously render the specified Markdown to html string
+ * @param markdown {string}
+ * @returns {Promise}
+ */
+export function render(markdown) {
+  return Promise.resolve(marked(markdown));
 }

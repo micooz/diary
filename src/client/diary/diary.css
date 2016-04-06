@@ -1,4 +1,4 @@
-@import "variables.css";
+@import "../css/variables.css";
 
 .header {
   background: #26292b; /* Old browsers */
@@ -38,6 +38,10 @@
   word-spacing: 0.04rem;
   letter-spacing: -0.01rem;
   line-height: 1.5;
+}
+
+.diary strong {
+  font-weight: 500;
 }
 
 .diary a {
@@ -105,9 +109,8 @@
 }
 
 .diary blockquote, .diary pre {
-  width: 90%;
   margin: 1.5rem auto 1.5rem auto;
-  padding: 1rem 0 1rem 1.5rem;
+  padding: 1rem 0 1rem 1rem;
   background-color: var(--blockBackground);
   border-left: var(--blockBorder);
 }

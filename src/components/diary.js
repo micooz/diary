@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 export class DiaryComponent extends Component {
 
   static propTypes = {
+    header: PropTypes.string,
     content: PropTypes.string
   };
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import path from 'path';
 import moment from 'moment';
+import serialize from 'serialize-javascript';
 import * as Archives from './archives';
 import * as Render from './render';
 import * as Assembler from './assembler';
 import * as Dump from './dump';
-import {HomeComponent} from './components/home.component';
-import {DiaryComponent} from './components/diary.component';
+import {HomeComponent} from '../components/home';
+import {DiaryComponent} from '../components/diary';
 
 export class Compiler {
 
@@ -43,12 +44,12 @@ export class Compiler {
 
   /**
    * render the markdown file into html and return the date of markdown
-   * @param markdown
+   * @param file
    * @returns {Date|null}
    */
-  makeDiaryPage(markdown) {
+  makeDiaryPage(file) {
     // 2016-01-01.md
-    const filename = path.basename(markdown);
+    const filename = path.basename(file);
 
     // matches is an array of year, month and day
     // e.g. ['2016-01-01', '2016', '01', '01']
@@ -58,26 +59,37 @@ export class Compiler {
       // ['2016', '01', '01']
       const year_month_day = [matches[1], matches[2], matches[3]];
 
+      // 2016-01-01
+      const date_str = year_month_day.join('-');
+
       // ['2016', '01']
       const year_month = [year_month_day[0], year_month_day[1]];
 
       // 2016-01-01.html
-      const html_filename = filename.replace(/(\w+)\.md$/, '$1.html');
+      const html_filename = `${date_str}.html`;
 
-      // path/to/2016-01-01.html
-      const saveTo = path.join(this.config.dist, ...[...year_month, html_filename]);
+      // 2016-01-01.json
+      const json_filename = `${date_str}.json`;
 
-      // 2016-01-01
-      const date_str = year_month_day.join('-');
+      // ...2016/01/2016-01-01.html
+      const htmlSaveTo = path.join(this.config.dist, ...[...year_month, html_filename]);
+
+      // ...2016/01/2016-01-01.json
+      const jsonSaveTo = path.join(this.config.dist, ...[...year_month, json_filename]);
+
       const date = new Date(date_str);
 
       // render every diary
-      Render.render(markdown)
-        .then(content => Assembler.assemble({
-          title: date.toDateString(),
-          body: <DiaryComponent header={date.toDateString()} content={content}/>
-        }))
-        .then(page => Dump.dump(page, saveTo))
+      Render.read(file)
+        .then(markdown => Render.render(markdown))
+        .then(content => {
+          Dump.dump(serialize({data: content}), jsonSaveTo);
+          return Assembler.assemble({
+            title: date.toDateString(),
+            body: <DiaryComponent header={date.toDateString()} content={content}/>
+          });
+        })
+        .then(page => Dump.dump(page, htmlSaveTo))
         .then(() => console.log(`==> [diary] compiled ${html_filename}`))
         .catch(err => console.error(err));
 
@@ -97,7 +109,8 @@ export class Compiler {
 
       Assembler.assemble({
           title: 'Diary Home',
-          body: <HomeComponent {...options}/>
+          body: <HomeComponent/>,
+          __data: options
         })
         .then(page => Dump.dump(page, saveTo))
         .then(() => console.log(`==> [homepage] generated at ${saveTo}`))
