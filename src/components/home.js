@@ -13,7 +13,7 @@ export class HomeComponent extends Component {
 
     if (window.__data.dates[year_month_day]) {
       __history__.push({
-        pathname: '/-/',
+        pathname: __DEVELOPMENT__ ? '/-/' : '/diary/-/',
         search: time.format('YYYY/MM/YYYY-MM-DD') + '.html',
         state: {
           filename: year_month_day,

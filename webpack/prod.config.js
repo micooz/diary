@@ -47,7 +47,8 @@ module.exports = webpackMerge(webpackCommon, {
       'NODE_ENV': JSON.stringify('production'),
       'process.env': {
         NODE_ENV: '"production"'
-      }
+      },
+      '__DEVELOPMENT__': false
     })
   ]
 

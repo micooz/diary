@@ -11,6 +11,11 @@ const main = () => {
 
     if (typeof routes[pathname] === 'function') {
       routes[pathname](location);
+    } else {
+      if (pathname.indexOf('html') !== -1) {
+        return;
+      }
+      console.warn('cannot find proper router to ' + pathname);
     }
   });
 };

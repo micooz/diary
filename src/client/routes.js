@@ -5,6 +5,14 @@ export default {
 
   '/': HomeController,
 
+  '/diary/': HomeController,
+
+  '/diary/index.html': HomeController,
+
+  '/diary/-/': DiaryController,
+
+  // for development
+
   '/-/': DiaryController
 
 };
