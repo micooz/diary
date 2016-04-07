@@ -52,6 +52,7 @@ To do these, just issue:
 - [x] **diary**: beautify
 - [ ] **diary**: highlight code
 - [ ] **deploy**: scripts to deploy github pages
+- [ ] **compiler**: incremental compilation
 
 ## Author
 
