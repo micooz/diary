@@ -7,6 +7,11 @@ export class DiaryComponent extends Component {
     content: PropTypes.string
   };
 
+  componentDidMount() {
+    document.title = this.props.header;
+    __highlight__();
+  }
+
   render() {
     const {header, content} = this.props;
 

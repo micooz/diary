@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import http from 'superagent';
 import {DiaryComponent} from '../../components/diary';
-import './diary.css'
+import './diary.css';
+import 'highlight.js/styles/tomorrow.css';
 
 export function DiaryController(location) {
   const {date, filename} = location.state;

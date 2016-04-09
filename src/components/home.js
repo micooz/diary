@@ -45,6 +45,7 @@ export class HomeComponent extends Component {
     });
 
     calendar.appendChild(pikaday.el);
+    document.title = 'Diary Home';
   }
 
   render() {

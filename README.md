@@ -50,7 +50,7 @@ To do these, just issue:
 - [x] **calendar**: only link days which have diary
 - [x] **page**: switch among pages without refresh
 - [x] **diary**: beautify
-- [ ] **diary**: highlight code
+- [x] **diary**: highlight code
 - [ ] **deploy**: scripts to deploy github pages
 - [ ] **compiler**: incremental compilation
 
