@@ -9,7 +9,10 @@ Track of everything in your life. It's not only a diary but also a `github pages
 ## Features
 
 * a calendar powered by [Pikaday](https://github.com/dbushell/Pikaday)
-* generate `*.md` to `*.html`
+* code highlight powered by [highlight.js](https://github.com/isagalaev/highlight.js)
+* incremental compile `*.md` to `*.html`
+* universal rending
+* SEO friendly
 
 ## Installation
 
