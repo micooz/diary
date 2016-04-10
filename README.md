@@ -51,8 +51,8 @@ To do these, just issue:
 - [x] **page**: switch among pages without refresh
 - [x] **diary**: beautify
 - [x] **diary**: highlight code
+- [x] **compiler**: incremental compilation
 - [ ] **deploy**: scripts to deploy github pages
-- [ ] **compiler**: incremental compilation
 
 ## Author
 

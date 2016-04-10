@@ -15,7 +15,7 @@
     "dev:server": "webpack-dev-server --config webpack/dev.config.js --content-base .",
     "compile": "npm run compile:dev",
     "compile:dev": "node bin/bootstrap.js",
-    "compile:prod": "NODE_ENV=production node bin/bootstrap.js"
+    "compile:prod": "NODE_ENV=production node bin/bootstrap.js -f"
   },
   "repository": {
     "type": "git",

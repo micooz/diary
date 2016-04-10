@@ -1,5 +1,6 @@
 import React from 'react';
 import path from 'path';
+import fs from 'fs';
 import moment from 'moment';
 import serialize from 'serialize-javascript';
 import * as Archives from './archives';
@@ -79,19 +80,35 @@ export class Compiler {
 
       const date = new Date(date_str);
 
-      // render every diary
-      Render.read(file)
-        .then(markdown => Render.render(markdown))
-        .then(content => {
-          Dump.dump(serialize({data: content}), jsonSaveTo);
-          return Assembler.assemble({
-            title: date.toDateString(),
-            body: <DiaryComponent header={date.toDateString()} content={content}/>
-          });
-        })
-        .then(page => Dump.dump(page, htmlSaveTo))
-        .then(() => console.log(`==> [diary] compiled ${html_filename}`))
-        .catch(err => console.error(err));
+      const compile = () => {
+        Render.read(file)
+          .then(markdown => Render.render(markdown))
+          .then(content => {
+            Dump.dump(serialize({data: content}), jsonSaveTo);
+            return Assembler.assemble({
+              title: date.toDateString(),
+              body: <DiaryComponent header={date.toDateString()} content={content}/>
+            });
+          })
+          .then(page => Dump.dump(page, htmlSaveTo))
+          .then(() => console.log(`==> [diary] compiled ${html_filename}`))
+          .catch(err => console.error(err));
+      };
+
+      if (this.config.force) {
+        // render every diary
+        compile();
+      } else {
+        // ignore html which has been compiled already
+        fs.access(htmlSaveTo, fs.F_OK, (err) => {
+          if (err && err.errno === -2) {
+            // DOES NOT exist, should compile this one
+            compile();
+          } else {
+            console.log(`==> [diary] ${filename} has been compiled, ignore`);
+          }
+        });
+      }
 
       return date;
     } else {

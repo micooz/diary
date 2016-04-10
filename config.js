@@ -17,6 +17,11 @@ export default {
   /**
    * where to put compiled static pages (*.html)
    */
-  dist: root('-')
+  dist: root('-'),
+
+  /**
+   * whether disable incremental compilation
+   */
+  force: false
 
 };
