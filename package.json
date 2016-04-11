@@ -58,7 +58,6 @@
   },
   "dependencies": {
     "highlight.js": "^9.3.0",
-    "history": "^2.0.1",
     "marked": "^0.3.5",
     "moment": "^2.12.0",
     "pikaday": "^1.4.0",
