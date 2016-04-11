@@ -1,18 +1,48 @@
-import {HomeController} from './home/home';
-import {DiaryController} from './diary/diary';
+import React from 'react';
+import {Router, Route, browserHistory} from 'react-router';
+import http from 'superagent';
+import {HomeComponent} from '../components/home';
+import {DiaryComponent} from '../components/diary';
 
-export default {
+const fetchMetadata = (nextState, replace, cb) => {
+  const {date, filename} = nextState.location.state;
 
-  '/': HomeController,
-
-  '/diary/': HomeController,
-
-  '/diary/index.html': HomeController,
-
-  '/diary/-/': DiaryController,
-
-  // for development
-
-  '/-/': DiaryController
-
+  http.get(`${filename}.json`)
+    .end((err, res) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const header = new Date(date).toDateString();
+        const content = res.body.data;
+        //
+        nextState.location.state = {header, content};
+        cb();
+      }
+    });
 };
+
+const checkData = (nextState, replace, cb) => {
+  if (!window.__data) {
+    window.location.reload();
+  }
+  cb();
+};
+
+export default (
+  <Router history={browserHistory}>
+
+    <Route onEnter={checkData}>
+      <Route path="/" component={HomeComponent}/>
+      <Route path="/diary/index.html" component={HomeComponent}/>
+    </Route>
+
+    <Route onEnter={fetchMetadata}>
+      <Route path="/diary/-/*" component={DiaryComponent}/>
+
+      {/* for development */}
+      <Route path="/-/*" component={DiaryComponent}/>
+    </Route>
+
+    <Route path="*" component={HomeComponent}/>
+  </Router>
+);

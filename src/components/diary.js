@@ -7,13 +7,28 @@ export class DiaryComponent extends Component {
     content: PropTypes.string
   };
 
+  highlight = () => {
+    const hljs = require('highlight.js');
+
+    const pres = document.getElementsByTagName('pre');
+    for (let i = 0, len = pres.length; i < len; ++i) {
+      const pre = pres[i];
+      const code = pre.getElementsByTagName('code');
+      if (code) {
+        hljs.highlightBlock(code[0]);
+      }
+    }
+  };
+
   componentDidMount() {
-    document.title = this.props.header;
-    __highlight__();
+    require('highlight.js/styles/tomorrow.css');
+
+    document.title = this.props.location.state.header;
+    this.highlight();
   }
 
   render() {
-    const {header, content} = this.props;
+    const {header, content} = this.props.location ? this.props.location.state : this.props;
 
     return (
       <div>

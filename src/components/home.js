@@ -1,7 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import moment from 'moment';
 
 export class HomeComponent extends Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   /**
    * trigger when a day is clicked
@@ -12,9 +16,8 @@ export class HomeComponent extends Component {
     const year_month_day = time.format('YYYY-MM-DD');
 
     if (window.__data.dates[year_month_day]) {
-      __history__.push({
-        pathname: __DEVELOPMENT__ ? '/-/' : '/diary/-/',
-        search: time.format('YYYY/MM/YYYY-MM-DD') + '.html',
+      this.context.router.push({
+        pathname: (__DEVELOPMENT__ ? '/-/' : '/diary/-/') + time.format('YYYY/MM/YYYY-MM-DD') + '.html',
         state: {
           filename: year_month_day,
           date: date
