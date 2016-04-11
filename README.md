@@ -2,10 +2,6 @@
 
 Track of everything in your life. It's not only a diary but also a `github pages` generator. :beer:
 
-**NOTE:**
-
-> It is under construction now, but PR welcome!
-
 ## Features
 
 * a calendar powered by [Pikaday](https://github.com/dbushell/Pikaday)
