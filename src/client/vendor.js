@@ -1,7 +1,7 @@
 import 'moment'
 import 'pikaday';
-import 'history';
 import 'react';
 import 'react-dom';
+import 'react-router'
 import 'superagent';
 import 'highlight.js'
