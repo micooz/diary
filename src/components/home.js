@@ -4,7 +4,7 @@ import moment from 'moment';
 export class HomeComponent extends Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object
   };
 
   /**
