@@ -7,7 +7,7 @@ Track of everything in your life. It's not only a diary but also a `github pages
 * a calendar powered by [Pikaday](https://github.com/dbushell/Pikaday)
 * code highlight powered by [highlight.js](https://github.com/isagalaev/highlight.js)
 * incremental compile `*.md` to `*.html`
-* universal rending
+* universal rendering
 * SEO friendly
 
 ## Installation
