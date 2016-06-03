@@ -18,9 +18,10 @@ Install everything you need:
 
 ## Usage
 
-1. write your diaries in Markdown, save them to `archives`.
-2. issue `$ npm run compile`.
-3. check out static html files in your `-`.
+1. configure paths through `config.js`.
+2. write your diaries in Markdown, save them to `archives`.
+3. issue `$ npm run build:prod`.
+4. deploy via `$ npm run deploy`
 
 ## Development
 
@@ -43,6 +44,12 @@ To do these, just issue:
 
     $ npm run build:prod
 
+## Deploy
+
+To deploy a static site to `gh-pages`, just:
+
+    $ npm run deploy
+
 ## RoadMap
 
 - [x] **dev**: add a dev server
@@ -51,7 +58,7 @@ To do these, just issue:
 - [x] **diary**: beautify
 - [x] **diary**: highlight code
 - [x] **compiler**: incremental compilation
-- [ ] **deploy**: scripts to deploy github pages
+- [x] **deploy**: scripts to deploy github pages
 
 ## Author
 

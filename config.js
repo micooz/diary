@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 const root = function root() {
   return path.resolve.apply(path, [__dirname, ...arguments]);
@@ -7,7 +7,7 @@ const root = function root() {
 /**
  * configurations
  */
-export default {
+module.exports = {
 
   /**
    * where to store *.md
@@ -15,9 +15,24 @@ export default {
   archives: root('archives'),
 
   /**
+   * the base path for deploy
+   */
+  deploy: root('gh-pages'),
+
+  /**
+   * where to store index.html
+   */
+  homepage: root('gh-pages/index.html'),
+
+  /**
    * where to put compiled static pages (*.html)
    */
-  dist: root('-'),
+  dist: root('gh-pages/-'),
+
+  /**
+   * where to store scripts
+   */
+  static: root('gh-pages/dist'),
 
   /**
    * whether disable incremental compilation

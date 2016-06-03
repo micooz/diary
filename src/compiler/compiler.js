@@ -14,8 +14,6 @@ export class Compiler {
 
   config = undefined;
 
-  homePage = path.resolve(__dirname, '../../index.html');
-
   constructor(config) {
     this.config = config;
   }
@@ -122,7 +120,7 @@ export class Compiler {
    */
   makeHomePage(options = {from: 0, to: 0, dates: {}}) {
     if (options.from > 0 && options.to > 0) {
-      const saveTo = this.homePage;
+      const saveTo = this.config.homepage;
 
       Assembler.assemble({
           title: 'Diary Home',

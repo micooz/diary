@@ -1,6 +1,7 @@
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 const webpackCommon = require('./common.config');
+const config = require('../config');
 
 // webpack plugins
 const DefinePlugin = require('webpack/lib/DefinePlugin');
@@ -13,7 +14,7 @@ module.exports = webpackMerge(webpackCommon, {
 
   output: {
 
-    path: path.resolve(__dirname, '../dist'),
+    path: config.static,
 
     filename: '[name].js',
 
