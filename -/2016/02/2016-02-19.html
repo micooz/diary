@@ -1,0 +1,45 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Fri Feb 19 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Fri Feb 19 2016</h1></header><div class="diary"><h1 id="angular2-input-">Angular2 @Input 绑定问题</h1>
+<pre><code>@Component({
+  template: `&lt;child [value]=&quot;bindValue&quot;&gt;&lt;/child&gt;`
+})
+class HomeComponent {
+  bindValue:string = &#39;hello&#39;;
+}
+
+@Component({
+  selector: &#39;child&#39;,
+  template: `...`
+})
+class ChildComponent{
+  @Input() value;
+
+  ngOnInit(){
+    // 这里可以取到value的值为&#39;hello&#39;
+    // 当bindValue动态改变时，此函数不会再次调用，需要在ngOnChanges中手动更新
+  }
+
+  ngOnChanges(changes) {
+    // this.value = changes[&#39;value&#39;].currentValue;
+    // ...
+    // 但是要小心这个函数会被频繁调用，
+    // 不要做复杂逻辑
+  }
+}
+</code></pre><h1 id="array-prototype-map-">Array.prototype.map 的坑</h1>
+<p>map回调如果不给出返回值，则默认返回 <code>undefined</code>，<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">MDN文档</a>中似乎并未提到这一点。</p>
+<pre><code>var numbers = [1, 4, 9];
+var roots = numbers.map(n =&gt; {
+  if (n === 4) {
+    return -1;
+  }
+});
+// [undefined, -1, undefined]
+</code></pre></div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>

@@ -1,0 +1,23 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Thu May 12 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Thu May 12 2016</h1></header><div class="diary"><h1 id="-link-in-docker">--link in docker</h1>
+<p>容器A通过--link选项使用容器B的某个服务，<code>docker-compose.yml</code> 配置如下：</p>
+<pre><code>A:
+  image: image_a
+  links:
+    - B:B
+  ...
+
+B:
+  image: image_b
+  ...
+</code></pre><p>当容器B被重启后，A的link不会被自动更新，要一并重启A才行：</p>
+<pre><code>$ docker-compose restart B # A doesn&#39;t work
+$ docker-compose restart A # it works well
+</code></pre></div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>

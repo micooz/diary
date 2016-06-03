@@ -1,0 +1,99 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Thu Mar 17 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Thu Mar 17 2016</h1></header><div class="diary"><h1 id="-js-">利用索引提升js的执行效率</h1>
+<p><strong>问题引入：</strong></p>
+<p>前段时间，有一个任务是需要<strong>频繁</strong>在<strong>大量的数据</strong>集合中<strong>快速定位</strong>并修改某个元素某个字段的值。</p>
+<p>数据结构是<strong>数组</strong>，元素的结构可能相当复杂且<strong>乱序</strong>。</p>
+<p><strong>问题分析：</strong></p>
+<p>假定这个数据集如下：</p>
+<pre><code>// array dataset
+[{
+  name: &#39;name1&#39;,
+  body: {
+    metadata: {
+      header: {
+        id: 1 // unique
+      }
+    }
+  },
+  ...
+}]
+</code></pre><p>实际上就是一个<strong>查找算法</strong>问题，假设要从1000条数据中查找id为1的元素，最SB做法是直接遍历整个数据集：</p>
+<pre><code class="lang-javascript">for(let ele of dataset) {
+  if (ele.body.metadata.header.id === 1) {
+    return ele;
+  }
+}
+</code></pre>
+<p>最坏的情况是O(n)，当然也可以使用其他常见的查找算法减少遍历次数，但如果要<strong>频繁</strong>查找，同步操作会导致页面直接卡死。</p>
+<p>如果有一张<strong>哈希表</strong>就帮大忙了，不妨先想想下面这个问题：</p>
+<blockquote>
+<p>在数据库里，为什么给一个字段加个索引就可以极大提升查询效率（通常情况）？</p>
+</blockquote>
+<p><strong>解决方案：</strong></p>
+<p>首先理解索引的含义，在js中，数组是线性结构，它的下标可以当成一种索引，通过下标访问元素时间复杂度为O(1)：</p>
+<pre><code class="lang-javascript">const db = [1, 2, 3, 4, 5, ...];
+const ele = db[2]; // very quick
+</code></pre>
+<p>对于一个Object，同样的：</p>
+<pre><code class="lang-javascript">const obj = {
+  col1: 1,
+  col2: 2,
+  ...
+};
+const col2 = obj[&#39;col2&#39;]; // very quick
+const col2 = obj.col2; // very quick
+</code></pre>
+<p>再看看最开始的那个问题，如果我们可以：</p>
+<pre><code class="lang-javascript">const id = 1;
+const ele = dataset[id]; // very quick
+</code></pre>
+<p>实现这个效果实际上就要<strong>建立索引</strong>，此时的 <code>dataset</code> 显然已经不能是最原始的数组了。当id不是数字的时候，<code>dataset</code> 也不能是数组，
+那么Object就理所当然地充当js里的HashMap了（ES6中已经有标准的<a href="http://es6.ruanyifeng.com/#docs/set-map#Map">Map</a>实现）。</p>
+<p>编写一个通用的索引创建函数，这个函数可以为一个数组，通过传入的回调函数的返回值创建一个包含所有数据引用的索引对象（Object）：</p>
+<pre><code class="lang-javascript">const index = (arr, fn) =&gt; {
+  let indexes = {};
+  for (let it of arr) {
+    const key = fn(it);
+    if (!indexes[key]) {
+      indexes[key] = {};
+    }
+    indexes[key] = it;
+  }
+  return indexes;
+}
+</code></pre>
+<p>函数只需要<strong>遍历一次数据集</strong>来建立索引。</p>
+<p>用法：</p>
+<pre><code class="lang-javascript">const our_index = _index(dataset, ele =&gt; ele.body.metadata.header.id);
+/*
+{
+  &quot;1&quot;: {
+    name: &#39;name1&#39;,
+    body: {
+      metadata: {
+        header: {
+          id: 1 // unique
+        }
+      }
+    }
+  },
+  &quot;2&quot;: {...},
+  ...
+}
+*/
+</code></pre>
+<p>有了这个索引 <code>our_index</code>，就可以愉快的以<strong>O(1)</strong>的复杂度来访问任意元素，取出的元素是引用，于是也可以直接对原存储空间的数据进行操作：</p>
+<pre><code class="lang-javascript">    let ele = our_index[1];
+    // operation on ele
+    ele.name = &#39;_&#39; + ele.name;
+</code></pre>
+<p><strong>小结</strong></p>
+<p>原生JavaScript不支持Map数据结构，因此可以通过对象来实现；关键在于如何根据需要建立索引，建立索引的字段必须满足<strong>唯一性</strong>。</p>
+</div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>

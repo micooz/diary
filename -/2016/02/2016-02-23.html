@@ -1,0 +1,51 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Tue Feb 23 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Tue Feb 23 2016</h1></header><div class="diary"><h1 id="angular2-">Angular2 事件绑定注意</h1>
+<pre><code class="lang-html">&lt;select [(ngModel)]=&quot;value&quot; (change)=&quot;onSelect(value)&quot;&gt;
+  ...
+&lt;/select&gt;
+</code></pre>
+<pre><code class="lang-javascript">onSelect(value) {
+  // value 还是原来的值，没来得及改变
+}
+</code></pre>
+<p><strong>解决办法</strong></p>
+<pre><code class="lang-javascript">onSelect(value) {
+  setTimeout(() =&gt; {
+    // value 绑定完成后的值
+  });
+}
+</code></pre>
+<h1 id="console-log-chrome-devtools-">console.log 或者说Chrome DevTools的坑</h1>
+<p>考虑下面的代码：</p>
+<pre><code class="lang-javascript">let obj = {a: []}, n = 100;
+while(n--) {
+  obj.a.push(n);
+}
+console.log(obj); // obj.a[50]: -100
+
+obj.a[50] = -100;
+console.log(obj); // obj.a[50]: -100
+</code></pre>
+<p>浏览器里可以发现两次输出的结果中 <code>a[50]</code> 都是 <code>-100</code>。这一点如果第一次遇到的话还真是匪夷所思。</p>
+<p>这里我故意把 <code>a</code> 数组的元素弄得很多，使 <code>DevTools</code> 以 <strong>折叠</strong> 方式显示：</p>
+<blockquote>
+<p>Object {a: Array[100]}
+Object {a: Array[100]}</p>
+</blockquote>
+<p>看似友好的显示方式，实际上里面有很大的问题。</p>
+<p>当我们<strong>展开第一个输出</strong>时， <code>DevTools</code> 会 <strong>及时</strong> 读取变量值，由于这是个 <strong>引用</strong> 类型，实际上它读到的是 <code>obj</code> 的最终值，及 <code>a[50]</code> 是 <code>-100</code>。</p>
+<p>如果数组a只有很少的元素，<code>DevTools</code> 不启用智能显示时就不会出现这个问题。</p>
+<p>也就是说，<code>console.log</code> 到 <code>DevTools</code> 里的实际上<strong>是引用而不是拷贝</strong>，<strong>展开</strong>操作会及时读取变量值。</p>
+<p>如果把上面例子的两个输出改成：</p>
+<pre><code class="lang-javascript">console.log(JSON.stringify(obj));
+</code></pre>
+<p>结果将和预期的一致。</p>
+<p><strong>因此</strong>，在浏览器中调试 <code>js</code> 程序应该以 <code>调试器</code> 下断点为主，日志为辅。</p>
+</div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>

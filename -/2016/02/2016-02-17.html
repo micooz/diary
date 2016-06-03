@@ -1,0 +1,22 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Wed Feb 17 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Wed Feb 17 2016</h1></header><div class="diary"><h1 id="object-assign-">Object.assign 的坑</h1>
+<pre><code>const _new = Object.assign(target, {...});
+</code></pre><p>会改变 <code>target</code> 本身，引发问题。</p>
+<blockquote>
+<p>The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects <strong>to</strong> a target object. It will return the target object.</p>
+</blockquote>
+<p>有三个解决办法：</p>
+<p><strong>逐个拷贝</strong></p>
+<pre><code>const _new = {k1: target.k1, k2: target.k2, ...};
+</code></pre><p><strong>ES6</strong></p>
+<pre><code>const _new = {...target, ...{...}};
+</code></pre><p><strong>（最佳）把第一个参数设成空对象</strong></p>
+<pre><code>const _new = Object.assign({}, target, {...});
+</code></pre></div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>

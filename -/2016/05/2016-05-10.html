@@ -1,0 +1,70 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Tue May 10 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Tue May 10 2016</h1></header><div class="diary"><h1 id="webpack-dev-server-">webpack-dev-server最佳实践</h1>
+<h2 id="-">简述</h2>
+<p><a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> 是用express和websocket实现的一套在开发环境下前端自动更新的工具。</p>
+<p>webpack-dev-server提供CLI接口，读取传入的webpack.config.js配置文件，根据webpack配置，建立一个静态服务器，供前端加载静态资源，其中有一个关键附加脚本是 <code>webpack-dev-server.js</code>，位于PATH根路径，即 <code>/webpack-dev-server.js</code>，其中存放着websocket客户端。</p>
+<h2 id="-">一般使用方法</h2>
+<p>可以通过下面的命令运行webpack-dev-server：</p>
+<pre><code>$ node node_modules/.bin/webpack-dev-server --config webpack/dev.config.js --inline --profile --colors --watch --display-error-details --display-cached
+</code></pre><p>参数说明参考：<a href="http://webpack.github.io/docs/webpack-dev-server.html#webpack-dev-server-cli">这里</a></p>
+<p>执行后会自动运行webpack进行打包等一系列操作。</p>
+<p>在webpack配置文件中只需添加一个 <code>devServer</code> 配置项即可定义webpack-dev-server的行为：</p>
+<pre><code class="lang-js">devServer: {
+  port: 3000,
+  host: &#39;localhost&#39;,
+  historyApiFallback: true,
+  quiet: false,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
+  }
+},
+</code></pre>
+<p>在这个例子中，webpack-dev-server会在本地<strong>3000</strong>端口上启动一个静态服务器，服务器serve的目录是webpack的必选配置 <code>output.path</code>，这是一个绝对路径。</p>
+<h2 id="-">一些问题？</h2>
+<p>请考虑下面这个问题：</p>
+<p>我有一个网站项目，分模块，每个模块是一个node项目，且每个模块可以<strong>独立存在</strong>（启动，调试，运行），它们有些用到了webpack-dev-server。</p>
+<p>再次强调每个模块相互独立，它们之间的耦合方式只有一种：<strong>请求代理</strong>。</p>
+<p>现在假设模块A作为API服务器，监听3000端口；模块B作为应用服务器，要提供资源给浏览器，于是用webpack-dev-server在端口3001的 <code>/</code> 上建立了静态服务器。模块B还要从模块A存取数据，那么必定存在从3001跨域请求到3000的问题，消除这个问题有多种解决办法：</p>
+<ol>
+<li>在A上设置 <code>Access-Control-Allow-Origin</code> 为B的域。</li>
+<li>在A、B上层建立代理服务器，屏蔽端口限制。</li>
+</ol>
+<p>不深入讨论上面的方法，现在假设我们<strong>采用方法二</strong>解决了跨域请求问题，然后我们再考虑一下接下来的一个问题：</p>
+<p>假设存在模块C，和B十分类似，也属于应用服务器；如果B和C存在同名资源，比如 <code>main.js</code>，访问该资源就会引发冲突，因为两个模块都在 <code>/</code> 上建立了静态服务器，而这又符合每个模块可以<strong>独立存在</strong>的先决条件：</p>
+<pre><code>// B
+http://localhost/B/index.html
+http://localhost/main.js
+// C
+http://localhost/C/index.html
+http://localhost/main.js // 哪个 main.js ?
+</code></pre><p>解决办法看似很明显：</p>
+<pre><code>// B
+http://localhost/B/index.html
+http://localhost/B/main.js
+// C
+http://localhost/C/index.html
+http://localhost/C/main.js // everyone is happy
+</code></pre><p>但这又破坏了每个模块的独立性，我希望单独启动C时，C总能从 <code>/</code> 上获取资源，而不是 <code>/C/...</code> 这么冗余。</p>
+<h2 id="-">最佳实践</h2>
+<p>问题就出在 <code>webpack-dev-server</code>，它适合作为<strong>静态资源服务器</strong>，而不是<strong>开发服务器</strong>。因此，我们的开发环境除了需要 <code>webpack-dev-server</code>，还需要专门的<strong>开发服务器</strong>。</p>
+<pre><code>// =&gt; Module B
+// dev server
+http://localhost/B/index.html
+// webpack-dev-server for B
+http://localhost:3001/...
+
+// =&gt; Module C
+// dev server
+http://localhost/C/index.html
+// webpack-dev-server for C
+http://localhost:3003/...
+</code></pre><p>每个模块从对应的 <code>webpack-dev-server</code> 获取资源，解决了冲突又保留了每个模块的独立性。</p>
+</div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>

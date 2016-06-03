@@ -1,0 +1,20 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Tue Mar 29 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Tue Mar 29 2016</h1></header><div class="diary"><h1 id="angular2-ngoninit">Angular2如何多次触发子组件的ngOnInit</h1>
+<p>通常子组件加载后只会执行一次<code>ngOnInit</code>，不利于子组件的自我更新，但设法使子组件从Dom中移除后重建就可以多次触发<code>ngOnInit</code>。</p>
+<pre><code class="lang-html">&lt;person *ngIf=&quot;show&quot;&gt;&lt;/person&gt;
+</code></pre>
+<pre><code class="lang-javascript">class PersonComponent {
+  ngOnInit() {
+    // triggered if show is available
+  }
+}
+</code></pre>
+<p>像这种<strong>带星号的指令</strong>就是Angular2中一种模板语法糖，可以管控组件的生命周期。</p>
+</div></div></div><script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-72182315-2', 'auto');
+          ga('send', 'pageview');
+      </script></body></html>
