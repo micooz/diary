@@ -33,13 +33,10 @@ export default (
 
     <Route onEnter={checkData}>
       <Route path="/" component={HomeComponent}/>
-      <Route path="/diary/index.html" component={HomeComponent}/>
+      <Route path="/index.html" component={HomeComponent}/>
     </Route>
 
     <Route onEnter={fetchMetadata}>
-      <Route path="/diary/-/*" component={DiaryComponent}/>
-
-      {/* for development */}
       <Route path="/-/*" component={DiaryComponent}/>
     </Route>
 

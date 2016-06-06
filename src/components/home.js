@@ -17,7 +17,7 @@ export class HomeComponent extends Component {
 
     if (window.__data.dates[year_month_day]) {
       this.context.router.push({
-        pathname: (__DEVELOPMENT__ ? '/-/' : '/diary/-/') + time.format('YYYY/MM/YYYY-MM-DD') + '.html',
+        pathname: '/-/' + time.format('YYYY/MM/YYYY-MM-DD') + '.html',
         state: {
           filename: year_month_day,
           date: date
