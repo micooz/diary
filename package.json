@@ -11,6 +11,7 @@
     "build:dev": "webpack --config webpack/dev.config.js --progress --profile --colors --display-error-details --display-cached --watch",
     "prebuild:prod": "concurrently \"npm run clean\" \"npm run compile:prod\"",
     "build:prod": "webpack --config webpack/prod.config.js --progress --profile --colors --display-error-details --display-cached --bail",
+    "postbuild:prod": "echo 'diary.apporz.com' > gh-pages/CNAME",
     "dev": "concurrently \"npm run clean\" \"npm run compile\" \"npm run dev:server\"",
     "dev:server": "webpack-dev-server --config webpack/dev.config.js --content-base .",
     "compile": "npm run compile:dev",
