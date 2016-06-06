@@ -20,12 +20,12 @@ export class Html extends Component {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>{title}</title>
         {__DEVELOPMENT__ ?
-          <script src="/diary/dist/vendor.js"></script> :
-          <script src="/diary/dist/vendor.min.js"></script>
+          <script src="/dist/vendor.js"></script> :
+          <script src="/dist/vendor.min.js"></script>
         }
         {__DEVELOPMENT__ ?
-          <script src="/diary/dist/app.js"></script> :
-          <script src="/diary/dist/app.min.js"></script>
+          <script src="/dist/app.js"></script> :
+          <script src="/dist/app.min.js"></script>
         }
       </head>
       <body>
