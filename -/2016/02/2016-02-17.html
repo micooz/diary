@@ -1,4 +1,4 @@
-<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Wed Feb 17 2016</title><script src="/diary/dist/vendor.min.js"></script><script src="/diary/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Wed Feb 17 2016</h1></header><div class="diary"><h1 id="object-assign-">Object.assign 的坑</h1>
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Wed Feb 17 2016</title><script src="/dist/vendor.min.js"></script><script src="/dist/app.min.js"></script></head><body><div id="app"><div><header class="header"><h1>Wed Feb 17 2016</h1></header><div class="diary"><h1 id="object-assign-">Object.assign 的坑</h1>
 <pre><code>const _new = Object.assign(target, {...});
 </code></pre><p>会改变 <code>target</code> 本身，引发问题。</p>
 <blockquote>
