@@ -14,15 +14,11 @@ module.exports = webpackMerge(webpackCommon, {
 
   debug: false,
 
-  devtool: 'source-map',
-
   output: {
 
     path: config.static,
 
     filename: '[name].min.js',
-
-    sourceMapFilename: '[name].map',
 
     chunkFilename: '[id]-[chunkhash].js'
 
