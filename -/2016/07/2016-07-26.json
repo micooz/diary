@@ -1,0 +1,1 @@
+{"data":"\u003Ch1 id=\"how-to-disable-text-selection-in-svg\"\u003EHow to disable text selection in svg\u003C\u002Fh1\u003E\n\u003Cp\u003EIn sass style:\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode class=\"lang-css\"\u003Etext {\n  user-select: none;\n\n  &amp;::selection {\n    background: none;\n  }\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n"}
