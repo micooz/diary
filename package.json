@@ -68,7 +68,7 @@
     "moment": "^2.13.0",
     "pikaday": "^1.4.0",
     "react": "^15.3.0",
-    "react-dom": "^15.2.1",
+    "react-dom": "^15.3.0",
     "react-router": "^2.6.0",
     "superagent": "^2.1.0"
   }
