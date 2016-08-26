@@ -46,7 +46,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "concurrently": "^2.1.0",
-    "css-loader": "^0.23.1",
+    "css-loader": "^0.24.0",
     "cssnano": "^3.7.4",
     "gh-pages": "^0.11.0",
     "piping": "^0.3.2",
