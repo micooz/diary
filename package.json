@@ -63,7 +63,7 @@
     "webpack-merge": "^0.14.1"
   },
   "dependencies": {
-    "highlight.js": "^9.6.0",
+    "highlight.js": "^9.7.0",
     "marked": "^0.3.6",
     "moment": "^2.15.1",
     "pikaday": "^1.4.0",
