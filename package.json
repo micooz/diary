@@ -66,7 +66,7 @@
     "highlight.js": "^9.7.0",
     "marked": "^0.3.6",
     "moment": "^2.15.2",
-    "pikaday": "^1.4.0",
+    "pikaday": "^1.5.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.1",
     "react-router": "^2.8.1",
